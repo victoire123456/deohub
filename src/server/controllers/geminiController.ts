@@ -21,7 +21,16 @@ async function runWithRetry<T>(fn: () => Promise<T>, retries = 3, delay = 1000):
                                 errMsg.includes('etimedout') || 
                                 errMsg.includes('econnrefused') ||
                                 errMsg.includes('socket hung up') ||
-                                errMsg.includes('failure');
+                                errMsg.includes('failure') ||
+                                errMsg.includes('503') ||
+                                errMsg.includes('unavailable') ||
+                                errMsg.includes('high demand') ||
+                                errMsg.includes('temporary') ||
+                                errMsg.includes('overloaded') ||
+                                errMsg.includes('rate limit') ||
+                                errMsg.includes('429') ||
+                                errMsg.includes('limit') ||
+                                errMsg.includes('quota');
       if (isTransientReason) {
         console.warn(`[Gemini Retry] Call failed (attempt ${attempt}/${retries}): ${err?.message || err}. Retrying in ${delay}ms...`);
         await new Promise(resolve => setTimeout(resolve, delay));
@@ -55,16 +64,44 @@ export const generateAssistantResponse = async (req: AuthRequest, res: Response)
       instruction += " Focus on giving direct growth hacks, posting schedule advice, community scores, and brand ideas for a serious content creator.";
     }
 
-    const response = await runWithRetry(async () => {
-      const chat = ai.chats.create({
-        model: "gemini-3.5-flash",
-        history: chatHistory,
-        config: {
-          systemInstruction: instruction,
-        }
-      });
-      return await chat.sendMessage({ message });
-    });
+    let response;
+    try {
+      response = await runWithRetry(async () => {
+        const chat = ai.chats.create({
+          model: "gemini-3.5-flash",
+          history: chatHistory,
+          config: {
+            systemInstruction: instruction,
+          }
+        });
+        return await chat.sendMessage({ message });
+      }, 3, 1000);
+    } catch (primaryErr: any) {
+      const errMsg = String(primaryErr?.message || primaryErr).toLowerCase();
+      const canFallbackJson = errMsg.includes('503') || 
+                              errMsg.includes('unavailable') || 
+                              errMsg.includes('high demand') || 
+                              errMsg.includes('overloaded') || 
+                              errMsg.includes('temporary') ||
+                              errMsg.includes('quota') ||
+                              errMsg.includes('limit');
+      
+      if (canFallbackJson) {
+        console.warn("[Gemini Fallback] gemini-3.5-flash is experiencing high demand. Falling back to robust gemini-3.1-flash-lite model...");
+        response = await runWithRetry(async () => {
+          const chat = ai.chats.create({
+            model: "gemini-3.1-flash-lite",
+            history: chatHistory,
+            config: {
+              systemInstruction: instruction,
+            }
+          });
+          return await chat.sendMessage({ message });
+        }, 3, 1000);
+      } else {
+        throw primaryErr;
+      }
+    }
 
     res.json({ text: response.text });
   } catch (err: any) {

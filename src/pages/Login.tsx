@@ -1,7 +1,21 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Image as ImageIcon, Mail, Lock, ArrowRight, Loader2, ShieldAlert } from 'lucide-react';
+import { 
+  Eye, 
+  EyeOff, 
+  Image as ImageIcon, 
+  Mail, 
+  Lock, 
+  ArrowRight, 
+  Loader2, 
+  ShieldAlert,
+  Radio,
+  Tv,
+  Bot,
+  Target,
+  Sparkles
+} from 'lucide-react';
 import { toast } from 'sonner';
 
 import { authService } from '../lib/authService';
@@ -67,109 +81,196 @@ export default function Login() {
 
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className="flex min-h-[80vh] flex-col justify-center px-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="grid min-h-screen w-full grid-cols-1 lg:grid-cols-12 bg-zinc-50 dark:bg-[#09090b]"
     >
-      <div className="mx-auto w-full max-w-sm">
-        <div className="mb-10 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-tr from-[#7c3aed] to-[#3b82f6] shadow-xl shadow-[#7c3aed]/20">
-            <ImageIcon className="h-10 w-10 text-white" />
-          </div>
-          <h1 className="text-3xl font-black tracking-tight text-zinc-900 dark:text-[#fafafa]">Welcome Back</h1>
-          <p className="mt-2 text-zinc-500 dark:text-[#71717a]">Enter your details to continue your journey</p>
-        </div>
-
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div className="space-y-1">
-            <div className="relative">
-              <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-zinc-400 dark:text-[#71717a]">
-                <Mail size={18} />
-              </div>
-              <input 
-                type="email" 
-                placeholder="Email Address" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-2xl bg-zinc-100 py-4 pl-10 pr-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/50 dark:bg-[#18181b] dark:text-[#fafafa] dark:border dark:border-[#27272a]"
-              />
+      {/* Left side: Premium Emerald Green Feature Panel */}
+      <div className="hidden lg:flex lg:col-span-5 bg-gradient-to-br from-emerald-800 via-emerald-950 to-teal-950 text-white p-12 flex-col justify-between relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 -mr-24 -mt-24 w-96 h-96 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 -ml-24 -mb-24 w-[500px] h-[500px] rounded-full bg-teal-500/10 blur-3xl pointer-events-none" />
+        
+        {/* Brand Header */}
+        <div className="relative z-10">
+          <div className="flex items-center gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-xl shadow-emerald-550/20">
+              <ImageIcon className="h-6 w-6 text-emerald-350" />
+            </div>
+            <div>
+              <span className="text-2xl font-black tracking-tight text-white">DeoHub</span>
+              <span className="ml-1.5 text-[10px] font-black uppercase tracking-wider bg-white/15 px-2 py-0.5 rounded-full text-emerald-100">Portal</span>
             </div>
           </div>
 
-          <div className="space-y-1">
-            <div className="relative">
-              <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-zinc-400 dark:text-[#71717a]">
-                <Lock size={18} />
+          <div className="space-y-6 mt-16">
+            <h2 className="text-3xl xl:text-4xl font-extrabold tracking-tight leading-tight text-white">
+              Connect, Broadcast & Monetize in real-time.
+            </h2>
+            <p className="text-emerald-100/90 text-sm leading-relaxed max-w-sm">
+              Publish media, monetize audiences with targeted campaigns, launch live events, and harness smart server-side AI metrics in one consolidated stream.
+            </p>
+          </div>
+
+          {/* Highlighting features */}
+          <div className="mt-12 space-y-6">
+            <div className="flex gap-4">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 border border-white/10 text-emerald-300 shadow-sm">
+                <Radio size={18} />
               </div>
-              <input 
-                type={showPassword ? "text" : "password"} 
-                placeholder="Password" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-2xl bg-zinc-100 py-4 pl-10 pr-12 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/50 dark:bg-[#18181b] dark:text-[#fafafa] dark:border dark:border-[#27272a]"
-              />
+              <div>
+                <h4 className="font-bold text-white text-sm">Interactive Live Broadcasts</h4>
+                <p className="text-xs text-emerald-100/70 mt-0.5 max-w-sm">Broadcast HD video directly to fans. Features high-performance action state tracking and live community reactions.</p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 border border-white/10 text-emerald-300 shadow-sm">
+                <Bot size={18} />
+              </div>
+              <div>
+                <h4 className="font-bold text-white text-sm">AI Copilot Analytics</h4>
+                <p className="text-xs text-emerald-100/70 mt-0.5 max-w-sm">Optimize your content plan with Gemini. Get growth metrics feedback, title generators, and direct marketing tactics instantly.</p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 border border-white/10 text-emerald-300 shadow-sm">
+                <Target size={18} />
+              </div>
+              <div>
+                <h4 className="font-bold text-white text-sm">Advanced Advertisement Center</h4>
+                <p className="text-xs text-emerald-100/70 mt-0.5 max-w-sm">Build targeted campaigns, budget active performance bidding rules, and track high-fidelity audience conversions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer info lockup */}
+        <div className="relative z-10 text-xs text-emerald-200/50 border-t border-white/10 pt-6 flex items-center justify-between">
+          <span>© 2026 DeoHub Inc.</span>
+          <span className="font-semibold uppercase tracking-widest text-[9px]">Creator Ecosystem</span>
+        </div>
+      </div>
+
+      {/* Right side: Form Panel */}
+      <div className="col-span-1 lg:col-span-7 flex flex-col justify-center px-6 py-12 sm:px-12 lg:px-16 xl:px-24">
+        
+        {/* Mobile Header (Visible only on screens smaller than LG) */}
+        <div className="mx-auto w-full max-w-sm lg:hidden mb-12 text-center bg-gradient-to-br from-emerald-500/10 via-emerald-600/5 to-teal-500/10 border border-emerald-500/25 rounded-3xl p-6 shadow-xs">
+          <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-650 shadow-md shadow-emerald-500/10">
+            <ImageIcon className="h-7 w-7 text-white" />
+          </div>
+          <h2 className="text-xl font-black text-zinc-900 dark:text-white">DeoHub Ecosystem</h2>
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 max-w-xs mx-auto">
+            Interactive live broadcasts, creator reels, instant messaging, and AI-powered performance.
+          </p>
+        </div>
+
+        <div className="mx-auto w-full max-w-sm">
+          {/* Section Greeting header (Desktop Only) */}
+          <div className="hidden lg:block mb-10">
+            <h1 className="text-3xl font-black tracking-tight text-zinc-900 dark:text-[#fafafa]">Welcome Back</h1>
+            <p className="mt-2.5 text-zinc-500 dark:text-[#71717a] text-sm font-medium">Enter your credentials to continue your journey</p>
+          </div>
+
+          {/* Mobile Welcome text (Centered) */}
+          <div className="lg:hidden mb-8 text-center">
+            <h1 className="text-2xl font-black tracking-tight text-zinc-900 dark:text-[#fafafa]">Welcome Back</h1>
+            <p className="mt-1.5 text-xs text-zinc-500 dark:text-[#71717a]">Enter your account credentials to continue</p>
+          </div>
+
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div className="space-y-1">
+              <div className="relative">
+                <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-zinc-400 dark:text-[#71717a]">
+                  <Mail size={18} />
+                </div>
+                <input 
+                  type="email" 
+                  placeholder="Email Address" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full rounded-2xl bg-zinc-100 py-4 pl-10 pr-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/50 dark:bg-[#18181b] dark:text-[#fafafa] dark:border dark:border-[#27272a]"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <div className="relative">
+                <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-zinc-400 dark:text-[#71717a]">
+                  <Lock size={18} />
+                </div>
+                <input 
+                  type={showPassword ? "text" : "password"} 
+                  placeholder="Password" 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full rounded-2xl bg-zinc-100 py-4 pl-10 pr-12 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/50 dark:bg-[#18181b] dark:text-[#fafafa] dark:border dark:border-[#27272a]"
+                />
+                <button 
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-3 flex items-center text-zinc-400 dark:text-[#71717a] hover:text-zinc-600 dark:hover:text-[#fafafa]"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
+
+            <div className="text-right">
+              <Link to="/forgot-password" className="text-xs font-bold text-[#7c3aed] hover:underline">
+                Forgot Password?
+              </Link>
+            </div>
+
+            <button 
+              type="submit"
+              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#7c3aed] py-4 font-bold text-white shadow-lg shadow-[#7c3aed]/20 transition-all hover:bg-[#6d28d9] active:scale-95"
+            >
+              Sign In
+              <ArrowRight size={18} />
+            </button>
+          </form>
+
+          <div className="mt-8">
+            <div className="relative flex items-center justify-center">
+              <div className="h-px w-full bg-zinc-200 dark:bg-[#27272a]"></div>
+              <span className="absolute bg-[#fafafa] px-4 text-xs font-bold uppercase tracking-widest text-zinc-400 dark:bg-[#09090b] dark:text-[#71717a]">Or continue with</span>
+            </div>
+
+            <div className="mt-8 grid grid-cols-2 gap-4">
               <button 
                 type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-3 flex items-center text-zinc-400 dark:text-[#71717a] hover:text-zinc-600 dark:hover:text-[#fafafa]"
+                onClick={() => {
+                  setGoogleEmail('');
+                  setGoogleError(null);
+                  setIsGoogleModalOpen(true);
+                }}
+                className="flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 bg-white py-3 transition-all hover:bg-zinc-50 dark:border-[#27272a] dark:bg-[#18181b] dark:hover:bg-[#27272a]"
               >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="h-5 w-5" alt="Google" />
+                <span className="text-sm font-bold dark:text-[#fafafa]">Google</span>
+              </button>
+              <button 
+                type="button"
+                onClick={() => toast.info('Facebook authentication is reserved for future integration releases.')}
+                className="flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 bg-white py-3 transition-all hover:bg-zinc-50 dark:border-[#27272a] dark:bg-[#18181b] dark:hover:bg-[#27272a]"
+              >
+                <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" className="h-5 w-5" alt="Facebook" />
+                <span className="text-sm font-bold dark:text-[#fafafa]">Facebook</span>
               </button>
             </div>
           </div>
 
-          <div className="text-right">
-            <Link to="/forgot-password" className="text-xs font-bold text-[#7c3aed] hover:underline">
-              Forgot Password?
+          <p className="mt-10 text-center text-sm font-medium text-zinc-500 dark:text-[#71717a]">
+            Don't have an account?{' '}
+            <Link to="/register" className="font-bold text-[#7c3aed] hover:underline">
+              Create Account
             </Link>
-          </div>
-
-          <button 
-            type="submit"
-            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#7c3aed] py-4 font-bold text-white shadow-lg shadow-[#7c3aed]/20 transition-all hover:bg-[#6d28d9] active:scale-95"
-          >
-            Sign In
-            <ArrowRight size={18} />
-          </button>
-        </form>
-
-        <div className="mt-8">
-          <div className="relative flex items-center justify-center">
-            <div className="h-px w-full bg-zinc-200 dark:bg-[#27272a]"></div>
-            <span className="absolute bg-[#fafafa] px-4 text-xs font-bold uppercase tracking-widest text-zinc-400 dark:bg-[#09090b] dark:text-[#71717a]">Or continue with</span>
-          </div>
-
-          <div className="mt-8 grid grid-cols-2 gap-4">
-            <button 
-              type="button"
-              onClick={() => {
-                setGoogleEmail('');
-                setGoogleError(null);
-                setIsGoogleModalOpen(true);
-              }}
-              className="flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 bg-white py-3 transition-all hover:bg-zinc-50 dark:border-[#27272a] dark:bg-[#18181b] dark:hover:bg-[#27272a]"
-            >
-              <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="h-5 w-5" alt="Google" />
-              <span className="text-sm font-bold dark:text-[#fafafa]">Google</span>
-            </button>
-            <button 
-              type="button"
-              onClick={() => toast.info('Facebook authentication is reserved for future integration releases.')}
-              className="flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 bg-white py-3 transition-all hover:bg-zinc-50 dark:border-[#27272a] dark:bg-[#18181b] dark:hover:bg-[#27272a]"
-            >
-              <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" className="h-5 w-5" alt="Facebook" />
-              <span className="text-sm font-bold dark:text-[#fafafa]">Facebook</span>
-            </button>
-          </div>
+          </p>
         </div>
-
-        <p className="mt-10 text-center text-sm font-medium text-zinc-500 dark:text-[#71717a]">
-          Don't have an account?{' '}
-          <Link to="/register" className="font-bold text-[#7c3aed] hover:underline">
-            Create Account
-          </Link>
-        </p>
       </div>
 
       {/* Google Authentication Administration Only Dialog */}
