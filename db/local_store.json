@@ -1,0 +1,33 @@
+{
+  "users": [
+    {
+      "username": "deotest_4598",
+      "email": "deotest_4766@example.com",
+      "password": "$2b$10$bNiuzNsqU3K91Aew8d2fRORtw2ve6GNr4gRArMVBAoj4RaM/wj9JW",
+      "role": "user",
+      "id": 1
+    },
+    {
+      "username": "testuser_1553",
+      "email": "test_3726@example.com",
+      "password": "$2b$10$bBG474C3Fgkdg0bOYA0pZ.avxFxb0x.t.Cig7ZmcHvJ0OadyIWkOe",
+      "role": "user",
+      "is_verified": true,
+      "id": 2
+    }
+  ],
+  "posts": [],
+  "likes": [],
+  "conversations": [],
+  "messages": [],
+  "message_reactions": [],
+  "follows": [],
+  "comments": [],
+  "notifications": [],
+  "reels": [],
+  "reel_likes": [],
+  "reel_comments": [],
+  "reel_comment_likes": [],
+  "advertisements": [],
+  "user_status": []
+}

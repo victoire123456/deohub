@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --color-brand: var(--brand-color);
+  --color-brand-hover: var(--brand-color-hover);
+}
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+    --brand-color: #7c3aed; /* Default Violet */
+    --brand-color-hover: #6d28d9;
+    --brand-color-glow: rgba(124, 58, 237, 0.2);
+  }
+
+  /* Theme accent presets */
+  [data-accent="violet"] {
+    --brand-color: #7c3aed;
+    --brand-color-hover: #6d28d9;
+    --brand-color-glow: rgba(124, 58, 237, 0.2);
+  }
+  [data-accent="blue"] {
+    --brand-color: #3b82f6;
+    --brand-color-hover: #1d4ed8;
+    --brand-color-glow: rgba(59, 130, 246, 0.2);
+  }
+  [data-accent="rose"] {
+    --brand-color: #f43f5e;
+    --brand-color-hover: #e11d48;
+    --brand-color-glow: rgba(244, 63, 94, 0.2);
+  }
+  [data-accent="emerald"] {
+    --brand-color: #10b981;
+    --brand-color-hover: #047857;
+    --brand-color-glow: rgba(16, 185, 129, 0.2);
+  }
+  [data-accent="amber"] {
+    --brand-color: #f59e0b;
+    --brand-color-hover: #d97706;
+    --brand-color-glow: rgba(245, 158, 11, 0.15);
+  }
+
+  html {
+    @apply bg-zinc-50 text-zinc-900 transition-colors duration-200;
+  }
+
+  html.dark {
+    @apply bg-[#09090b] text-[#fafafa];
+  }
+
+  body {
+    @apply font-sans;
+  }
+}
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Custom scrollbar for a cleaner mobile look on desktop */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-zinc-300 dark:bg-zinc-700 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-zinc-500 dark:bg-zinc-600;
+}

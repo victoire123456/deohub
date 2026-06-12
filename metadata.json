@@ -1,0 +1,6 @@
+{
+  "name": "DeoHub",
+  "description": "A modern, responsive social media platform built with Material Design 3 principles, featuring real-time feeds, chat, and notification systems.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
